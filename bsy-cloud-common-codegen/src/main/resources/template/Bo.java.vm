@@ -1,0 +1,33 @@
+package ${package}.${moduleName}.bo;
+import java.io.Serializable;
+import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+#foreach ($importPackage in $importPackages)
+#if($importPackage != 'java.time.LocalDateTime' && $importPackage != 'com.baomidou.mybatisplus.annotation.IdType' && $importPackage != 'com.baomidou.mybatisplus.annotation.TableId')
+import $importPackage;
+#end
+#end
+/**
+ * ${comments}BO类
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ${className}BO implements Serializable{
+    private static final long serialVersionUID=1L;
+
+    #foreach ($column in $columns)
+    #if($column.columnName != "create_time" && $column.columnName !="update_time" && $column.columnName != "is_deleted")
+
+    /**
+     * $column.comments
+     * */
+    private $column.attrType $column.lowerAttrName;
+    #end
+    #end
+
+}

@@ -1,0 +1,48 @@
+package ${package}.${moduleName}.client;
+
+#set($classPrefix = 'External' + $className)
+import ${package}.common.mvc.dto.PageDTO;
+import ${package}.common.core.vo.Result;
+import ${package}.${moduleName}.dto.${classPrefix}RequestDTO;
+import ${package}.${moduleName}.dto.${classPrefix}ResponseDTO;
+import org.springframework.stereotype.Component;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Component
+public class ${classPrefix}ClientHystrix implements ${classPrefix}Client {
+
+    @Override
+    public Result<PageDTO<${classPrefix}ResponseDTO>> selectPage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, ${classPrefix}RequestDTO requestDTO) {
+        return Result.failure("noop");
+    }
+
+    @Override
+    public Result<${classPrefix}ResponseDTO> selectById(@PathVariable String id) {
+        return Result.failure("noop");
+    }
+
+    @Override
+    public Result<Void> insert(@Valid @RequestBody ${classPrefix}RequestDTO requestDTO) {
+        return Result.failure("noop");
+    }
+
+    @Override
+    public Result<Void> updateById(@PathVariable String id, @RequestBody ${classPrefix}RequestDTO requestDTO) {
+        return Result.failure("noop");
+    }
+
+    @Override
+    public Result<Void> deleteById(@PathVariable String id) {
+        return Result.failure("noop");
+    }
+}

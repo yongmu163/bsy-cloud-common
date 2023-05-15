@@ -1,0 +1,75 @@
+package ${package}.${moduleName}.service.impl;
+
+import ${package}.${moduleName}.model.${className};
+import ${package}.${moduleName}.mapper.${className}Mapper;
+import ${package}.${moduleName}.service.I${className}Service;
+import ${package}.${moduleName}.bo.${className}BO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import cn.bsy.cloud.common.core.utils.ObjectUtils;
+import cn.hutool.core.util.ObjectUtil;
+import cn.bsy.cloud.common.mvc.utils.PageUtils;
+import java.util.List;
+/**
+ * ${comments}
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service("${classname}Service")
+@AllArgsConstructor
+public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}> implements I${className}Service{
+    private ${className}Mapper ${classname}Mapper;
+    @Override
+    public ${className}BO get${className}ById(String id) {
+        ${className} ${classname} = this.getById(id);
+        if (ObjectUtil.isNotNull(${classname})) {
+            return ObjectUtils.cloneObj(${classname}, ${className}BO.class);
+        }
+        return null;
+    }
+    @Override
+    public List<${className}> get${className}ByIds(List<String> idList) {
+        return ${classname}Mapper.select${className}ByIds(idList);
+    }
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String add${className}(${className}BO ${classname}Bo) {
+        if (ObjectUtil.isNotNull(${classname}Bo)) {
+            ${className} ${classname} = ObjectUtils.cloneObj(${classname}Bo, ${className}.class);
+            ${classname}.preInsert();
+            this.save(${classname});
+            return ${classname}.getId();
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer edit${className}(String id, ${className}BO ${classname}Bo) {
+        if (ObjectUtil.isNotNull(${classname}Bo)) {
+            ${className} ${classname} = ObjectUtils.cloneObj(${classname}Bo, ${className}.class);
+            ${classname}.preUpdate();
+            ${classname}.setId(id);
+            return ${classname}Mapper.updateById(${classname});
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer remove${className}ById(String id) {
+        return ${classname}Mapper.deleteById(id);
+    }
+
+    @Override
+    public Page<${className}BO> get${className}Page(Page<${className}BO> page, ${className}BO ${classname}Bo) {
+        Page<${className}> ${classname}Page = PageUtils.copy(page,${className}.class);
+        ${className} ${classname} = new ${className}();
+        ${classname}.setId(${classname}Bo.getId());
+        ${classname}Page = ${classname}Mapper.select${className}Page(${classname}Page,${classname});
+        return PageUtils.copy(${classname}Page,${className}BO.class);
+    }
+}

@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.oracle.config.DataSourceAutoConfiguration,\
+  cn.bsy.cloud.common.oracle.factory.DataSourceFactory
+org.springframework.boot.env.EnvironmentPostProcessor=\
+    cn.bsy.cloud.common.oracle.config.ExcludeOracleAutoConfiguration

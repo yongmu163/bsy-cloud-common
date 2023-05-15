@@ -1,0 +1,39 @@
+package ${package}.${moduleName}.${subPackage}.dto;
+
+#if($subPackage == 'web')
+    #set($classPrefix = $className)
+    #set($classNamePrefix = $classname)
+#else
+    #set($classPrefix = $prefix + $className)
+    #set($classNamePrefix = $subPackage + $className)
+#end
+import ${package}.common.mvc.dto.BaseResponseDTO;
+import lombok.*;
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#end
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ${classPrefix}ResponseDTO extends BaseResponseDTO {
+    private static final long serialVersionUID = 1L;
+#foreach ($column in $columns)
+#if($column.columnName != "create_time" && $column.columnName !="update_time" && $column.columnName != "is_deleted")
+
+    /**
+     * $column.comments
+     */
+#if($column.attrType == "LocalDateTime")
+    private Long $column.lowerAttrName;
+#else
+    private $column.attrType $column.lowerAttrName;
+#end
+#end
+#end
+
+}

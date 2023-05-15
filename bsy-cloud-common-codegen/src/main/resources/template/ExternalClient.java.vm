@@ -1,0 +1,66 @@
+package ${package}.${moduleName}.client;
+
+#set($classPrefix = 'External' + $className)
+import ${package}.common.mvc.dto.PageDTO;
+import ${package}.common.core.vo.Result;
+import ${package}.${moduleName}.dto.${classPrefix}RequestDTO;
+import ${package}.${moduleName}.dto.${classPrefix}ResponseDTO;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@FeignClient(name = "${moduleName}", fallback = ${classPrefix}ClientHystrix.class)
+public interface ${classPrefix}Client {
+
+    /**
+     * 查询
+     * @param page 当前页
+     * @param size 条数
+     * @param requestDTO 参数
+     * @return Result<PageDTO<${classPrefix}ResponseDTO>>
+     */
+    @GetMapping("/external/${moduleName}/v1/${classname}")
+    Result<PageDTO<${classPrefix}ResponseDTO>> selectPage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, ${classPrefix}RequestDTO requestDTO);
+
+    /**
+     * 详情
+     * @param id 唯一标示
+     * @return Result<${classPrefix}ResponseDTO>
+     */
+    @GetMapping("/external/${moduleName}/v1/${classname}/{id}")
+    Result<${classPrefix}ResponseDTO> selectById(@PathVariable String id);
+
+    /**
+     * 新增
+     *
+     * @param requestDTO 参数
+     * @return Result<Void>
+     */
+    @PostMapping("/external/${moduleName}/v1/${classname}")
+    Result<Void> insert(@Valid @RequestBody ${classPrefix}RequestDTO requestDTO);
+
+    /**
+     * 修改
+     *
+     * @param id 唯一标示
+     * @param requestDTO 参数
+     * @return Result<Void>
+     */
+    @PutMapping("/external/${moduleName}/v1/${classname}/{id}")
+    Result<Void> updateById(@PathVariable String id, @RequestBody ${classPrefix}RequestDTO requestDTO);
+
+    /**
+     * 删除
+     *
+     * @param id 唯一标示
+     * @return Result<Void>
+     */
+    @DeleteMapping("/external/${moduleName}/v1/${classname}/{id}")
+    Result<Void> deleteById(@PathVariable String id);
+}

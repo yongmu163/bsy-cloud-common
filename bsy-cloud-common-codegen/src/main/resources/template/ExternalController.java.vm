@@ -1,0 +1,59 @@
+package ${package}.${moduleName}.external.controller;
+
+#set($classPrefix = 'External' + $className)
+#set($classNamePrefix = 'external' + $className)
+import ${package}.common.mvc.dto.PageDTO;
+import ${package}.common.core.vo.Result;
+import ${package}.${moduleName}.model.${className};
+import ${package}.${moduleName}.service.${className}Service;
+import ${package}.${moduleName}.external.converter.${classPrefix}Converter;
+import ${package}.${moduleName}.dto.${classPrefix}RequestDTO;
+import ${package}.${moduleName}.dto.${classPrefix}ResponseDTO;
+import ${package}.${moduleName}.client.${classPrefix}Client;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+@AllArgsConstructor
+public class ${classPrefix}Controller extends AbstractBaseController implements ${classPrefix}Client {
+    private final ${className}Service ${classname}Service;
+    private final ${classPrefix}Converter ${classNamePrefix}Converter;
+
+    @Override
+    public PageDTO<${classPrefix}ResponseDTO> selectPage(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int size, ${classPrefix}RequestDTO requestDTO) {
+        Page<${className}> pageQuery = new Page<>(page, size);
+        Page<${className}> pageResult = ${classname}Service.selectPage(pageQuery, ${classNamePrefix}Converter.requestToModel(requestDTO));
+        return ${classNamePrefix}Converter.modelToResponsePage(pageResult);
+    }
+
+    @Override
+    public ${classPrefix}ResponseDTO selectById(@PathVariable String id) {
+        return ${classNamePrefix}Converter.modelToResponse(${classname}Service.selectById(id));
+    }
+
+    @Override
+    public Result<Void> insert(@Valid @RequestBody ${classPrefix}RequestDTO requestDTO) {
+        ${classname}Service.insert(${classNamePrefix}Converter.requestToModel(requestDTO));
+        return Result.ok();
+    }
+
+    @Override
+    public Result<Void> updateById(@PathVariable String id, @RequestBody ${classPrefix}RequestDTO requestDTO) {
+        ${classname}Service.update(id, ${classNamePrefix}Converter.requestToModel(requestDTO));
+        return Result.ok();
+    }
+
+    @Override
+    public Result<Void> deleteById(@PathVariable String id) {
+        ${classname}Service.deleteById(id);
+        return Result.ok();
+    }
+}

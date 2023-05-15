@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.codegen.config.DataSourceAutoConfiguration,\
+  cn.bsy.cloud.codegen.config.CodeGenConfig,\
+  cn.bsy.cloud.codegen.controller.CodeGeneratorController

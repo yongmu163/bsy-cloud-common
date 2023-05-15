@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.rabbit.config.RabbitMqConfiguration,\
+  cn.bsy.cloud.common.rabbit.config.RabbitMqConfig

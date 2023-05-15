@@ -1,0 +1,7 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.file.config.MinIoAutoConfiguration,\
+  cn.bsy.cloud.common.file.config.MinIoClientConfig,\
+  cn.bsy.cloud.common.file.utils.MinIoUtil,\
+  cn.bsy.cloud.common.file.config.BookMarkConfig,\
+  cn.bsy.cloud.common.file.config.ExcelConfiguration,\
+  cn.bsy.cloud.common.file.aop.ValidateColumnAspect

@@ -1,0 +1,53 @@
+package ${package}.${moduleName}.service;
+import ${package}.${moduleName}.bo.${className}BO;
+import ${package}.${moduleName}.model.${className};
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+/**
+ * ${comments}接口
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface I${className}Service {
+
+    /**
+     * 查询${comments}信息
+     * @param id 唯一标示
+     * @return ${className}
+     */
+     ${className}BO get${className}ById(String id);
+    /**
+     * 根据ID列表获取${comments}信息
+     * @param idList
+     * @return
+     */
+    List<${className}> get${className}ByIds(List<String> idList);
+    /**
+     * 添加${comments}信息
+     * @param ${classname}Bo
+     * @return String
+     */
+    String add${className}(${className}BO ${classname}Bo);
+
+    /**
+     * 修改${comments}信息
+     * @param id 唯一标示
+     * @param ${classname}Bo
+     * @return String
+     */
+    Integer edit${className}(String id, ${className}BO ${classname}Bo);
+
+    /**
+     * 删除${comments}信息
+     * @param id 唯一标示
+     * @return void
+     */
+    Integer remove${className}ById(String id);
+
+    /**
+     * 分页获取数据源信息
+     * @param page
+     * @param ${classname}Bo
+     * @return
+     */
+    Page<${className}BO> get${className}Page(Page<${className}BO> page, ${className}BO  ${classname}Bo);
+}

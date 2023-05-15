@@ -1,0 +1,67 @@
+{
+  "url": ["/${moduleName}/v1/${classname}","/front/${moduleName}/v1/${classname}/","/api/${moduleName}/v1/${classname}","/mobile/${moduleName}/v1/${classname}","/external/${moduleName}/v1/${classname}"]
+  "data":
+  {
+    "id" : "String"
+    #foreach ($column in $columns)
+      #if($column.columnName != $pk.columnName && $column.columnName != "create_time" && $column.columnName !=
+        "update_time" && $column.columnName != "is_deleted")
+        #if($column.attrType == "Integer" || $column.attrType == "Long")
+          ,,"$column.lowerAttrName" : 1
+        #else
+          ,"$column.lowerAttrName" : "String"
+        #end
+      #end
+
+    #end
+  },
+  "requestSchema": {
+    "type": "object",
+    "title": "${className}",
+    "properties": {
+      "id" : { "type": "string" ,  "description": "ID", "mock" :  {"mock" :  "@string"}}
+      #foreach ($column in $columns)
+        #if($column.columnName != $pk.columnName && $column.columnName != "create_time" && $column.columnName !=
+          "update_time" && $column.columnName != "is_deleted")
+          #if($column.attrType == "Integer" || $column.attrType == "Long")
+            ,"$column.lowerAttrName" : { "type": "integer",  "description": "${column.comments}", "mock" :  {"mock" :  "@integer"}}
+          #else
+            ,"$column.lowerAttrName" : { "type": "string" ,  "description": "${column.comments}", "mock" :  {"mock" :  "@string"}}
+          #end
+        #end
+
+      #end
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "responseSchema": {
+    "type": "object",
+    "title": "${className}",
+    "properties": {
+      "status": { "type": "integer" ,  "description": "响应码", "mock" :  {"mock" :  "@integer"}}
+      ,"message": { "type": "string" ,  "description": "提示信息", "mock" :  {"mock" :  "@string"}}
+      ,"data": {
+        "type": "object",
+        "description": "数据",
+        "properties": {
+          "id" : { "type": "string" ,  "description": "ID", "mock" :  {"mock" :  "@string"}}
+          #foreach ($column in $columns)
+            #if($column.columnName != $pk.columnName && $column.columnName != "create_time" && $column.columnName !=
+              "update_time" && $column.columnName != "is_deleted")
+              #if($column.attrType == "Integer" || $column.attrType == "Long")
+              ,"$column.lowerAttrName" : { "type": "integer",  "description": "${column.comments}", "mock" :  {"mock" :  "@integer"}}
+              #else
+              ,"$column.lowerAttrName" : { "type": "string" ,  "description": "${column.comments}", "mock" :  {"mock" :  "@string"}}
+              #end
+            #end
+
+          #end
+        },
+        "required": []
+      }
+    },
+    "additionalProperties": false
+  }
+}
+

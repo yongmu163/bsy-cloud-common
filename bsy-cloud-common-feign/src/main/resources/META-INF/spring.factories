@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.feign.config.FeignOkHttpConfig,\
+  cn.bsy.cloud.common.feign.config.FeignConfig,\
+  cn.bsy.cloud.common.feign.config.FeignMultipartConfig

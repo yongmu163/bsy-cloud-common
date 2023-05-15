@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Author: 代码生成器创建-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${package}.${moduleName}.mapper.${className}Mapper">
+    <resultMap id="${classname}Map" type="${package}.${moduleName}.model.${className}">
+#foreach($column in $columns)
+#if($column.columnName != "is_deleted")
+        <result column="${column.columnName.toUpperCase()}" property="${column.lowerAttrName}" />
+#end
+#end
+    </resultMap>
+    <!-- 查询${tableName}表列属性 -->
+    <sql id="${classname}Column">
+#foreach($column in $columns)
+#if($velocityCount != $columns.size())
+        A.${column.columnName.toUpperCase()},
+#else
+        A.${column.columnName.toUpperCase()}
+#end
+#end
+    </sql>
+    <!-- 根据id列表获取${tableName}属性列表 -->
+    <select id="select${className}ByIds" resultMap="${classname}Map">
+        SELECT
+        <include refid="${classname}Column"/>
+        FROM ${tableName.toUpperCase()} A
+        WHERE A.ID IN
+        <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND A.IS_DELETED = 0
+        GROUP BY
+        <include refid="${classname}Column"/>
+    </select>
+    <!--分页列表查询-->
+    <select id="select${className}Page" resultMap="${classname}Map">
+        SELECT
+        <include refid="${classname}Column"/>
+        FROM ${tableName.toUpperCase()} A
+        WHERE A.ID = #{${classname}.id}
+        AND A.IS_DELETED = 0
+        GROUP BY
+        <include refid="${classname}Column"/>
+    </select>
+</mapper>

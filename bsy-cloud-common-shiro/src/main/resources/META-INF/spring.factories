@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.shiro.config.ShiroConfig,\
+  cn.bsy.cloud.common.shiro.config.ShiroLifecycleConfig

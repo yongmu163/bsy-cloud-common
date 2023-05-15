@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.core.config.TreeConfig,\
+  cn.bsy.cloud.common.core.config.RestConfig,\
+  cn.bsy.cloud.common.core.config.IgnoreUrlsConfig

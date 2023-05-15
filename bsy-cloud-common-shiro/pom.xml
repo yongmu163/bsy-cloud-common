@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bsy-cloud-common</artifactId>
+        <groupId>cn.bsy.cloud</groupId>
+        <version>2.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <description>公共组件包-单体项目认证鉴权组件包</description>
+    <artifactId>bsy-cloud-common-shiro</artifactId>
+    <dependencies>
+        <!--shiro框架依赖-->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+        <!-- 公共组件包-通用配置组件包-->
+        <dependency>
+            <groupId>cn.bsy.cloud</groupId>
+            <artifactId>bsy-cloud-common-core</artifactId>
+        </dependency>
+        <!--公共组件包-缓存数据库组件包-->
+        <dependency>
+            <groupId>cn.bsy.cloud</groupId>
+            <artifactId>bsy-cloud-common-redis</artifactId>
+        </dependency>
+        <!-- 公共组件包-web项目通用配置组件包-->
+        <dependency>
+            <groupId>cn.bsy.cloud</groupId>
+            <artifactId>bsy-cloud-common-mvc</artifactId>
+        </dependency>
+        <!--公共组件包-认证令牌配置组件包-->
+        <dependency>
+            <groupId>cn.bsy.cloud</groupId>
+            <artifactId>bsy-cloud-common-jwt</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

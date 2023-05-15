@@ -1,0 +1,36 @@
+package ${package}.${moduleName}.dto;
+
+#set($classPrefix = 'External' + $className)
+#if(${hasBigDecimal})
+import java.math.BigDecimal;
+#if(${hasLocalDateTime})
+import java.time.LocalDateTime;
+#end
+#end
+import lombok.Data;
+import java.io.Serializable;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+public class ${classPrefix}RequestDTO implements Serializable {
+    private static final long serialVersionUID=1L;
+
+#foreach ($column in $columns)
+#if($column.columnName != $pk.columnName && $column.columnName != "is_deleted")
+
+    /**
+     * $column.comments
+     */
+#if($column.attrType == "LocalDateTime")
+    private String $column.lowerAttrName;
+#else
+    private $column.attrType $column.lowerAttrName;
+#end
+#end
+#end
+
+}

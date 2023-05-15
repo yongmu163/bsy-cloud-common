@@ -1,0 +1,188 @@
+<template>
+    <a-modal
+            :title="title"
+            :width="800"
+            :visible="visible"
+            :confirmLoading="confirmLoading"
+            :destroyOnClose="true"
+            :okButtonProps="{ props: { disabled: disableSubmit } }"
+            @ok="handleOk"
+            @cancel="handleCancel"
+            cancelText="关闭"
+    >
+        <a-spin :spinning="confirmLoading">
+            <a-form :form="form" layout="vertical">
+#foreach($column in $columns)
+                <a-form-item
+                        :labelCol="labelCol"
+                        :wrapperCol="wrapperCol"
+                        label="${column.comments}"
+                >
+                    <a-input
+                            placeholder="请输入${column.comments}"
+                            v-decorator="[
+          '${column.lowerAttrName}',
+          { rules: [{ required: true, message: '请输入${column.comments}!' }] }
+        ]"
+                            :disabled="disableSubmit"
+                    />
+                </a-form-item>
+#end
+
+##                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="描述">
+##                    <a-textarea
+##                            placeholder="请输入描述"
+##                            :rows="4"
+##                            v-decorator="[
+##              'description',
+##              { rules: [{ required: true, message: '请输入描述!' }] }
+##            ]"
+##                            :disabled="disableSubmit"
+##                    />
+##                </a-form-item>
+##                <a-form-item
+##                        :labelCol="labelCol"
+##                        :wrapperCol="wrapperCol"
+##                        label="服务调用次数"
+##                >
+##                    <a-input-number
+##                            style="width: 100%;"
+##                            placeholder="请输入服务调用次数"
+##                            v-decorator="[
+##              'callNo',
+##              { rules: [{ required: true, message: '请输入服务调用次数!' }] }
+##            ]"
+##                            :disabled="disableSubmit"
+##                    />
+##                </a-form-item>
+##                <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="状态">
+##                    <a-select
+##                            placeholder="请输入状态"
+##                            v-decorator="[
+##              'status',
+##              { rules: [{ required: true, message: '请输入状态!' }] }
+##            ]"
+##                            :disabled="disableSubmit"
+##                    >
+##                        <a-select-option value="0">关闭</a-select-option>
+##                        <a-select-option value="1">运行中</a-select-option>
+##                        <a-select-option value="2">已上线</a-select-option>
+##                        <a-select-option value="3">异常</a-select-option>
+##                    </a-select>
+##                </a-form-item>
+##                <a-form-item
+##                        :labelCol="labelCol"
+##                        :wrapperCol="wrapperCol"
+##                        label="更新时间"
+##                >
+##                    <a-date-picker
+##                            style="width: 100%;"
+##                            showTime
+##                            format="YYYY-MM-DD HH:mm:ss"
+##                            placeholder="请输入更新时间"
+##                            v-decorator="[
+##              'updatedAt',
+##              { rules: [{ required: true, message: '请输入更新时间!' }] }
+##            ]"
+##                            :disabled="disableSubmit"
+##                    />
+##                </a-form-item>
+            </a-form>
+        </a-spin>
+    </a-modal>
+</template>
+<script>
+    import { httpAction } from '@/service/request'
+    import moment from 'moment'
+    export default {
+        name: 'FormModal',
+        data () {
+            return {
+                title: '操作',
+                visible: false,
+                disableSubmit: false,
+                model: {},
+                labelCol: {
+                    xs: { span: 24 },
+                    sm: { span: 5 }
+                },
+                wrapperCol: {
+                    xs: { span: 24 },
+                    sm: { span: 16 }
+                },
+                confirmLoading: false,
+                form: this.$form.createForm(this),
+                validatorRules: {},
+                url: {
+                    add: '/${moduleName}/${classname}',
+                    edit: '/${moduleName}/${classname}'
+                }
+            }
+        },
+        methods: {
+            add () {
+                this.edit({})
+            },
+            edit (record) {
+                this.form.resetFields()
+                this.model = Object.assign({}, record)
+                this.visible = true
+                this.$nextTick(() => {
+                    this.form.setFieldsValue({
+                        no: this.model.no,
+                        description: this.model.description,
+                        callNo: this.model.callNo,
+                        status: (this.model.status && this.model.status + '') || '1',
+                        updatedAt:
+                                (this.model.updatedAt && moment(record.updatedAt)) || moment()
+                    })
+                })
+            },
+            close () {
+                this.$emit('close')
+                this.visible = false
+            },
+            handleOk () {
+                const that = this
+                this.form.validateFields((err, values) => {
+                    if (!err) {
+                        that.confirmLoading = true
+                        let httpurl = ''
+                        let method = ''
+                        if (!this.model.id) {
+                            httpurl += this.url.add
+                            method = 'post'
+                        } else {
+                            httpurl += this.url.edit
+                            method = 'put'
+                        }
+                        ## 转义问题
+                        #set($a = 'that.$message')
+                        const formData = Object.assign(this.model, values)
+                        httpAction(httpurl, formData, method)
+                                .then(res => {
+                                    if (res.success) {
+                                        ${a}.success(res.message);
+                                        that.$emit('ok')
+                                    } else {
+                                        ${a}.warning(res.message)
+                                    }
+                                })
+                                .finally(() => {
+                                    that.confirmLoading = false
+                                    that.close()
+                                })
+                    }
+                })
+            },
+            handleCancel () {
+                this.close()
+            }
+        }
+    }
+</script>
+<style lang="less" scoped>
+    .ant-form {
+        padding-left: 70px;
+    }
+</style>

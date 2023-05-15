@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cn.bsy.cloud.common.mvc.config.AdviceConfig,\
+  cn.bsy.cloud.common.mvc.config.FilterConfig,\
+  cn.bsy.cloud.common.mvc.config.CorsConfig

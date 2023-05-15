@@ -1,0 +1,78 @@
+package ${package}.${moduleName}.service;
+
+import ${package}.${moduleName}.model.${className};
+import ${package}.${moduleName}.mapper.${className}Mapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * ${comments}
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Service
+@AllArgsConstructor
+public class ${className}Service extends ServiceImpl<${className}Mapper, ${className}>{
+    private ${className}Mapper ${classname}Mapper;
+
+    /**
+     * 详情查询
+     *
+     * @param id 唯一标示
+     * @return ${className}
+     */
+    public ${className} selectById(String id) {
+        return ${classname}Mapper.selectById(id);
+    }
+
+    /**
+     * 添加
+     *
+     * @param ${classname} model
+     * @return int
+     */
+    public int insert(${className} ${classname}) {
+        ${classname}.preInsert();
+        return ${classname}Mapper.insert(${classname});
+    }
+
+    /**
+     * 修改
+     *
+     * @param id 唯一标示
+     * @param ${classname} model
+     * @return int
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public int update(String id, ${className} ${classname}) {
+        ${classname}.preUpdate();
+        ${classname}.setId(id);
+        return ${classname}Mapper.updateById(${classname});
+    }
+
+    /**
+     * 删除
+     *
+     * @param id 唯一标示
+     * @return int
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteById(String id) {
+        return ${classname}Mapper.deleteById(id);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param page 分页
+     * @param ${classname} 对象
+     * @return Page<${className}>
+     */
+    public Page<${className}> selectPage(Page<${className}> page, ${className} ${classname}) {
+        return (Page<${className}>) ${classname}Mapper.selectPage(page, new QueryWrapper<>(${classname}));
+    }
+}

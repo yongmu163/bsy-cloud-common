@@ -1,0 +1,97 @@
+package ${package}.${moduleName}.${subPackage}.controller;
+
+#if($subPackage == 'web')
+    #set($classPrefix = $className)
+    #set($classNamePrefix = $classname)
+#else
+    #set($classPrefix = $prefix + $className)
+    #set($classNamePrefix = $subPackage + $className)
+#end
+import ${package}.common.mvc.dto.PageDTO;
+import ${package}.common.core.vo.Result;
+import ${package}.${moduleName}.model.${className};
+import ${package}.${moduleName}.service.I${className}Service;
+import ${package}.${moduleName}.${subPackage}.converter.${classPrefix}Converter;
+import ${package}.${moduleName}.${subPackage}.dto.${classPrefix}RequestDTO;
+import ${package}.${moduleName}.${subPackage}.dto.${classPrefix}ResponseDTO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@RestController
+#if($subPackage == 'web')
+@RequestMapping("/${moduleName}/${classname}")
+#else
+@RequestMapping("/${subPackage}/${moduleName}/${classname}")
+#end
+@AllArgsConstructor
+public class ${classPrefix}Controller {
+    private final I${className}Service ${classname}Service;
+    private final ${classPrefix}Converter ${classNamePrefix}Converter;
+
+    /**
+     * 查询
+     * @param page 分页
+     * @param requestDTO 参数
+     * @return PageDTO<${classPrefix}ResponseDTO>
+     */
+    @GetMapping
+    public PageDTO<${classPrefix}ResponseDTO> getPage(Page<${className}BO> page, ${classPrefix}RequestDTO requestDTO) {
+        Page<${className}BO> pageResult = ${classname}Service.get${className}Page(page, ${classNamePrefix}Converter.requestToModel(requestDTO));
+        return ${classNamePrefix}Converter.modelToResponsePage(pageResult);
+    }
+
+    /**
+     * 详情
+     * @param id 唯一标示
+     * @return Result${classPrefix}ResponseDTO
+     */
+    @GetMapping("/{id}")
+    public ${classPrefix}ResponseDTO get${className}ById(@PathVariable String id) {
+        return ${classNamePrefix}Converter.modelToResponse(${classname}Service.get${className}ById(id));
+    }
+
+    /**
+     * 新增
+     *
+     * @param requestDTO 参数
+     * @return Result<Void>
+     */
+    @PostMapping
+    public Result<Void> add${className}(@Valid @RequestBody ${classPrefix}RequestDTO requestDTO) {
+        ${classname}Service.add${className}(${classNamePrefix}Converter.requestToModel(requestDTO));
+        return Result.ok();
+    }
+
+    /**
+     * 修改
+     *
+     * @param id 唯一标示
+     * @param requestDTO 参数
+     * @return Result<Void>
+     */
+    @PutMapping("/{id}")
+    public Result<Void> edit${className}ById(@PathVariable String id, @RequestBody ${classPrefix}RequestDTO requestDTO) {
+        ${classname}Service.edit${className}(id, ${classNamePrefix}Converter.requestToModel(requestDTO));
+        return Result.ok();
+    }
+
+    /**
+     * 删除
+     *
+     * @param id 唯一标示
+     * @return Result<Void>
+     */
+    @DeleteMapping("/{id}")
+    public Result<Void> remove${className}ById(@PathVariable String id) {
+        ${classname}Service.remove${className}ById(id);
+        return Result.ok();
+    }
+}

@@ -1,0 +1,36 @@
+package ${package}.${moduleName}.model;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import ${package}.common.mysql.model.BaseModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+#foreach ($importPackage in $importPackages)
+#if($importPackage != 'java.time.LocalDateTime' && $importPackage != 'com.baomidou.mybatisplus.annotation.IdType' && $importPackage != 'com.baomidou.mybatisplus.annotation.TableId')
+import $importPackage;
+#end
+#end
+/**
+ * ${comments}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Data
+@TableName("${tableName}")
+@EqualsAndHashCode(callSuper = true)
+public class ${className} extends BaseModel<${className}> {
+    private static final long serialVersionUID=1L;
+
+#foreach ($column in $columns)
+    #if($column.columnName != $pk.columnName && $column.columnName != "create_time" && $column.columnName !=
+        "update_time" && $column.columnName != "is_deleted")
+
+    /**
+     * $column.comments
+     */
+    @TableField("${column.columnName}")
+    private $column.attrType $column.lowerAttrName;
+    #end
+#end
+
+}
