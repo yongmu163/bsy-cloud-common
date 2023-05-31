@@ -35,7 +35,30 @@ public class RedissonConfig {
         singleServerConfig.setAddress(address);
         // 设置 数据库编号
         singleServerConfig.setDatabase(index);
+        // 密码
         singleServerConfig.setPassword(password);
+        // 发布和订阅连接的最小空闲连接数
+        singleServerConfig.setSubscriptionConnectionMinimumIdleSize(1);
+        // 发布和订阅连接池大小
+        singleServerConfig.setSubscriptionConnectionPoolSize(50);
+        // 最小空闲连接数
+        singleServerConfig.setConnectionMinimumIdleSize(32);
+        // 连接池大小
+        singleServerConfig.setConnectionPoolSize(64);
+        // 连接空闲超时，单位：毫秒
+        singleServerConfig.setIdleConnectionTimeout(10000);
+        // 连接超时，单位：毫秒
+        singleServerConfig.setConnectTimeout(10000);
+        // 命令等待超时，单位：毫秒
+        singleServerConfig.setTimeout(3000);
+        // 命令失败重试次数
+        singleServerConfig.setRetryAttempts(3);
+        // 命令重试发送时间间隔，单位：毫秒
+        singleServerConfig.setRetryInterval(1500);
+        // 单个连接最大订阅数量
+        singleServerConfig.setSubscriptionsPerConnection(5);
+
+        singleServerConfig.setPingConnectionInterval(1000);
         // 设置Key和Value以字符串进行读取
         config.setCodec(new StringCodec());
         return Redisson.create(config);
