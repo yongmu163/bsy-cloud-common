@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bsy-cloud-common</artifactId>
+        <groupId>cn.bsy.cloud</groupId>
+        <version>2.0-RELEASE</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>bsy-cloud-common-netty</artifactId>
+    <description>公共组件包-TCP通讯组件包</description>
+    <!--依赖排列规范，SpringCloud相关包 => SpringBoot相关包  =>  私有仓库自定义依赖包 => 第三方依赖包 -->
+    <dependencies>
+        <!--公共组件包-web项目通用配置组件包-->
+        <dependency>
+            <groupId>cn.bsy.cloud</groupId>
+            <artifactId>bsy-cloud-common-core</artifactId>
+        </dependency>
+        <!--Netty依赖-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${io.netty.base}</version>
+        </dependency>
+        <!--OpenSSL-->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-tcnative-boringssl-static</artifactId>
+            <version>${io.netty.ssl}</version>
+        </dependency>
+        <!--protobuf依赖-->
+        <dependency>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>${protobuf.version}</version>
+        </dependency>
+        <!--grpc依赖-->
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-netty-shaded</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-protobuf</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-stub</artifactId>
+            <version>${grpc.version}</version>
+        </dependency>
+    </dependencies>
+</project>

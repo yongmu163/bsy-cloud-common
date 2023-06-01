@@ -19,6 +19,7 @@
         <module>bsy-cloud-common-oracle</module>
         <module>bsy-cloud-common-rabbit</module>
         <module>bsy-cloud-common-codegen</module>
+        <module>bsy-cloud-common-netty</module>
     </modules>
     <name>${project.artifactId}</name>
     <packaging>pom</packaging>
@@ -58,6 +59,10 @@
         <!-- nettyTCP通讯框架依赖-->
         <io.netty.base>4.1.49.Final</io.netty.base>
         <io.netty.ssl>2.0.25.Final</io.netty.ssl>
+        <!--protobuf依赖-->
+        <protobuf.version>3.9.0</protobuf.version>
+        <!--grpc依赖-->
+        <grpc.version>1.23.0</grpc.version>
         <!-- 验证码工具依赖 -->
         <kaptcha.varsion>0.0.9</kaptcha.varsion>
         <!-- 代码生成模板引擎 -->
@@ -78,7 +83,7 @@
         <!--feign支持多媒体文件类型依赖包-->
         <feign-form.version>3.8.0</feign-form.version>
         <oracle.version>19.3.0.0</oracle.version>
-        <redisson.version>3.14.1</redisson.version>
+        <redisson.version>3.17.6</redisson.version>
         <rabbitmq.version>5.9.0</rabbitmq.version>
     </properties>
     <parent>
@@ -268,6 +273,12 @@
             <dependency>
                 <groupId>cn.bsy.cloud</groupId>
                 <artifactId>bsy-cloud-common-codegen</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!--公共组件包-TCP通讯组件包-->
+            <dependency>
+                <groupId>cn.bsy.cloud</groupId>
+                <artifactId>bsy-cloud-common-netty</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
